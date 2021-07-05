@@ -11,6 +11,8 @@ const Space = () => {
     const { user } = useAuth()
     const history = useHistory()
 
+
+
     async function handleLogout() {
         await auth.signOut()
         history.push("/")
@@ -35,7 +37,7 @@ const Space = () => {
                 'https://api.chatengine.io/users/me/',
                 {
                     headers: {
-                        "project-id": "128238bb-ca84-43fe-be08-ded5d6f5831c",
+                        "project-id": process.env.REACT_APP_CHAT_ENGINE_ID,
                         "user-name": user.email,
                         "user-secret": user.uid
                     }
@@ -57,7 +59,7 @@ const Space = () => {
                             axios.post(
                                 'https://api.chatengine.io/users/',
                                 formdata,
-                                { headers: { "private-key": process.env.CHAT_ENGINE_KEY } }
+                                { headers: { "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY } }
                             )
                                 .then(() => setLoading(false))
                                 .catch(e => console.log('e', e.response))
@@ -75,7 +77,7 @@ const Space = () => {
             <button onClick={handleLogout}>Logout</button>
             <ChatEngine
                 height="calc(100vh -66px)"
-                projectID="128238bb-ca84-43fe-be08-ded5d6f5831c"
+                projectID={process.env.REACT_APP_CHAT_ENGINE_ID}
                 userName={user.email}
                 userSecret={user.uid}
             />
